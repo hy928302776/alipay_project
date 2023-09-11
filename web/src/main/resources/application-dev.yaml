@@ -3,6 +3,43 @@ server:
 spring:
   application:
     name: pay-project
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 0
+    host: 10.1.120.42:6379
+    # Redis服务器连接密码（默认为空）
+    password:
+    # 连接超时时间（毫秒）
+    timeout: 5000ms
+    max-redirects: 5
+    jedis:
+      pool:
+        #最大连接数据库连接数,设 0 为没有限制
+        max-active: 8
+        #最大等待连接中的数量,设 0 为没有限制
+        max-idle: 8
+        #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+        max-wait: -1ms
+        #最小等待连接中的数量,设 0 为没有限制
+        min-idle: 0
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+      shutdown-timeout: 100ms
+
+
+
+
+
+
+
 
 alipay:
   # 支付宝网关
@@ -23,3 +60,4 @@ alipay:
   returnUrl: http://localhost:9999/#/personal/illegalInfo
   # 异步通知url
   notifyUrl: http://4get9t.natappfree.cc/aliPay/notify
+
