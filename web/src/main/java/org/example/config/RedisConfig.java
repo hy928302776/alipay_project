@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -88,16 +88,16 @@ public class RedisConfig {
      * @Modified By: 
      */
     @Bean
-    public JedisConnectionFactory jedisConnectionFactory() {
+    public LettuceConnectionFactory jedisConnectionFactory() {
         if (host.split(",").length == 1) {
-            JedisConnectionFactory factory = new JedisConnectionFactory();
+            LettuceConnectionFactory factory = new LettuceConnectionFactory();
             factory.setHostName(host.split(":")[0]);
             factory.setPort(Integer.valueOf(host.split(":")[1]));
             factory.setPassword(password);
             factory.setTimeout(Integer.parseInt(timeout.replace("ms","")));
             return factory;
         } else {
-            JedisConnectionFactory jcf = new JedisConnectionFactory(getClusterConfiguration());
+            LettuceConnectionFactory jcf = new LettuceConnectionFactory(getClusterConfiguration());
             jcf.setPassword(password); //集群的密码认证
             return jcf;
         }
